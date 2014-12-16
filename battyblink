@@ -1,0 +1,24 @@
+#!/bin/bash
+BATTERY=$(cat /sys/class/power_supply/BAT0/capacity)
+BATTSTATUS=$(cat /sys/class/power_supply/BAT0/status)
+LOWBATT=10
+MINBL=3
+MAXBL=20
+
+if [ $BATTSTATUS = "Discharging" -a $BATTERY -lt $LOWBATT ]
+then
+BRIGHTNESS=$(cat /sys/class/backlight/acpi_video0/brightness)
+echo $MINBL > /sys/class/backlight/acpi_video0/brightness
+sleep 0.5
+echo $MAXBL > /sys/class/backlight/acpi_video0/brightness
+sleep 0.5
+echo $MINBL > /sys/class/backlight/acpi_video0/brightness
+sleep 0.5
+echo $MAXBL > /sys/class/backlight/acpi_video0/brightness
+sleep 0.5
+echo $MINBL > /sys/class/backlight/acpi_video0/brightness
+sleep 0.5
+echo $MAXBL > /sys/class/backlight/acpi_video0/brightness
+sleep 0.5
+echo $BRIGHTNESS > /sys/class/backlight/acpi_video0/brightness
+fi
